@@ -1,23 +1,21 @@
 import { Analytics } from "@vercel/analytics/next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Noto_Sans_KR } from "next/font/google";
+
+import { SpendingProvider } from "@/components/spending/spending-provider";
 
 import type { Metadata } from "next";
 
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const bodyFont = Noto_Sans_KR({
+  variable: "--font-body",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-const siteName = "";
-const siteDescription = "";
+const siteName = "소비 습관 들여보기";
+const siteDescription = "한 달 동안 쓴 돈을 슥슥 넘겨보며, 이건 안 써도 됐겠다를 발견하는 앱";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -42,10 +40,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ko"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${bodyFont.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">
-        {children}
+      <body className="bg-background text-foreground flex min-h-full flex-col font-sans">
+        <SpendingProvider>{children}</SpendingProvider>
         <Analytics />
       </body>
     </html>
